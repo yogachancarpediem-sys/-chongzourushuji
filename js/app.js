@@ -493,28 +493,28 @@ function showToast(text) {
 // ==================== 角色素材映射 ====================
 const CHARACTER_ASSETS = {
   liuxiaoliu: {
-    default: '../assets/characters/liuxiaoliu_default.png',
-    wave: '../assets/characters/liuxiaoliu_wave.png',
-    cheer: '../assets/characters/liuxiaoliu_cheer.png',
-    think: '../assets/characters/liuxiaoliu_think.png',
-    read: '../assets/characters/liuxiaoliu_read.png',
-    sleep: '../assets/characters/liuxiaoliu_sleep.png',
-    draw: '../assets/characters/liuxiaoliu_draw.png',
-    cute: '../assets/characters/liuxiaoliu_cute.png',
-    jump: '../assets/characters/liuxiaoliu_jump.png',
-    run: '../assets/characters/liuxiaoliu_run.png'
+    default: 'assets/characters/liuxiaoliu_default.png',
+    wave: 'assets/characters/liuxiaoliu_wave.png',
+    cheer: 'assets/characters/liuxiaoliu_cheer.png',
+    think: 'assets/characters/liuxiaoliu_think.png',
+    read: 'assets/characters/liuxiaoliu_read.png',
+    sleep: 'assets/characters/liuxiaoliu_sleep.png',
+    draw: 'assets/characters/liuxiaoliu_draw.png',
+    cute: 'assets/characters/liuxiaoliu_cute.png',
+    jump: 'assets/characters/liuxiaoliu_jump.png',
+    run: 'assets/characters/liuxiaoliu_run.png'
   },
   linu: {
-    default: '../assets/characters/linu_default.png',
-    heimao: '../assets/characters/linu_heimao.png',
-    baimao: '../assets/characters/linu_baimao.png',
-    yinjian: '../assets/characters/linu_yinjian.png',
-    huban: '../assets/characters/linu_huban.png',
-    daimao: '../assets/characters/linu_daimao.png',
-    juzi_play: '../assets/characters/linu_juzi_play.png',
-    huima_play: '../assets/characters/linu_huima_play.png',
-    nainiu: '../assets/characters/linu_nainiu.png',
-    zongmao: '../assets/characters/linu_zongmao.png'
+    default: 'assets/characters/linu_default.png',
+    heimao: 'assets/characters/linu_heimao.png',
+    baimao: 'assets/characters/linu_baimao.png',
+    yinjian: 'assets/characters/linu_yinjian.png',
+    huban: 'assets/characters/linu_huban.png',
+    daimao: 'assets/characters/linu_daimao.png',
+    juzi_play: 'assets/characters/linu_juzi_play.png',
+    huima_play: 'assets/characters/linu_huima_play.png',
+    nainiu: 'assets/characters/linu_nainiu.png',
+    zongmao: 'assets/characters/linu_zongmao.png'
   },
   // 每个地点对应的狸奴花色
   stationCat: {

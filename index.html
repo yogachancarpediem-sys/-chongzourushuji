@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#F5F0E6">
+  <meta name="format-detection" content="telephone=no">
+  <!-- Open Graph / 微信分享 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="重走《入蜀记》：陆小六的奇幻诗旅">
+  <meta property="og:description" content="南宋乾道六年，诗人陆游从山阴出发，沿运河南下入长江，终抵夔州。一路山水之间，藏着多少诗心碎片与风物精华？">
+  <meta property="og:image" content="share-card.png">
+  <meta property="og:site_name" content="入蜀记">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="重走《入蜀记》：陆小六的奇幻诗旅">
+  <meta name="twitter:description" content="南宋乾道六年，诗人陆游从山阴出发，沿运河南下入长江，终抵夔州。">
+  <meta name="twitter:image" content="share-card.png">
+  <!-- 微信内置浏览器兼容 -->
+  <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%23C4A35A'/><text x='50' y='68' font-size='60' text-anchor='middle' font-family='serif' fill='%23F5F0E6'>蜀</text></svg>">
+  <title>重走《入蜀记》：陆小六的奇幻诗旅</title>
+  <link rel="stylesheet" href="css/style.css?v=19">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- 背景音乐 -->
+  <audio id="bgm" loop preload="auto">
+    <source src="../assets/bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 音量控制 -->
+  <button class="bgm-toggle" id="bgm-toggle" onclick="toggleBGM()" title="背景音乐">
+    <span class="bgm-icon">🔇</span>
+  </button>
+
+  <!-- ==================== 开场页 ==================== -->
+  <section id="opening" class="screen active">
+    <!-- WebGL 着色器背景 -->
+    <canvas id="shader-canvas" class="shader-canvas"></canvas>
+    <div class="opening-bg">
+      <div class="ink-wash ink-wash-1"></div>
+      <div class="ink-wash ink-wash-2"></div>
+      <div class="ink-wash ink-wash-3"></div>
+      <div class="ink-wash ink-wash-4"></div>
+      <svg class="mountain-silhouette" viewBox="0 0 1440 400" preserveAspectRatio="none">
+        <path d="M0,400 L0,280 Q80,180 160,240 Q240,120 360,200 Q440,80 560,180 Q640,100 720,160 Q800,60 900,140 Q960,80 1040,160 Q1120,100 1200,180 Q1280,120 1360,200 Q1400,160 1440,220 L1440,400 Z" fill="#2C2C2C"/>
+        <path d="M0,400 L0,320 Q100,260 200,300 Q300,220 400,280 Q500,200 600,260 Q700,180 800,240 Q900,160 1000,220 Q1100,180 1200,260 Q1300,200 1440,280 L1440,400 Z" fill="#2C2C2C" opacity="0.5"/>
+      </svg>
+      <div class="floating-particles">
+        <span class="particle p1">诗</span>
+        <span class="particle p2">心</span>
+        <span class="particle p3">风</span>
+        <span class="particle p4">物</span>
+        <span class="particle p5">山</span>
+        <span class="particle p6">水</span>
+      </div>
+    </div>
+
+    <div class="opening-content">
+      <!-- 标题区 -->
+      <div class="title-group">
+        <div class="seal">入蜀记</div>
+        <h1 class="title">重走入蜀记</h1>
+        <div class="title-line"></div>
+        <p class="subtitle">陆小六的奇幻诗旅</p>
+      </div>
+
+      <p class="description">
+        南宋乾道六年（1170），诗人陆游从故乡山阴出发，<br>
+        历时近五个月，沿运河南下入长江，终抵夔州。<br>
+        一路山水之间，藏着多少诗心碎片与风物精华？
+      </p>
+
+      <!-- 诗旅路线 · 水墨流线 -->
+      <div class="route-stream" id="route-stream">
+        <svg class="stream-svg" viewBox="0 0 500 70" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- 淡墨底线（左=山阴 → 右=夔州） -->
+          <path id="streamPath"
+                d="M30,38 C80,28 130,42 190,32 C250,22 300,38 360,28 C400,22 440,32 475,34"
+                fill="none" stroke="var(--ink)" stroke-width="0.6" stroke-linecap="round"
+                opacity="0.1"/>
+          <!-- 水墨晕染 -->
+          <path d="M30,38 C80,28 130,42 190,32 C250,22 300,38 360,28 C400,22 440,32 475,34"
+                fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"
+                opacity="0.02"/>
+          <!-- 金光帆船（JS 控制位置与朝向） -->
+          <g id="goldBoat" opacity="0" filter="url(#softGlow)">
+            <!-- 船身 -->
+            <path d="M-7,1 Q-5,4 0,4 Q5,4 7,1 Q4,0 -4,0 Z" fill="var(--accent-gold)" opacity="0.95"/>
+            <!-- 桅杆 -->
+            <line x1="0" y1="0" x2="0" y2="-10" stroke="var(--accent-gold)" stroke-width="0.5" opacity="0.8"/>
+            <!-- 主帆 -->
+            <path d="M0.5,-1 L1,-9 Q5,-5 0.5,-1Z" fill="var(--accent-gold)" opacity="0.7"/>
+            <!-- 帆面高光 -->
+            <path d="M1,-3 L1,-8 Q3,-5.5 1,-3Z" fill="#E8D48B" opacity="0.3"/>
+            <!-- 小旗 -->
+            <path d="M0,-10 L3,-9.2 L0,-8.5" fill="var(--accent-red)" opacity="0.6"/>
+          </g>
+          <!-- 船尾金色涟漪（JS 控制） -->
+          <line id="goldWake" x1="0" y1="0" x2="0" y2="0"
+                stroke="var(--accent-gold)" stroke-width="0.5" stroke-linecap="round" opacity="0"/>
+          <!-- 船身柔光晕 -->
+          <circle id="goldHalo" cx="0" cy="0" r="6"
+                  fill="var(--accent-gold)" opacity="0"/>
+          <!-- 站点圆点（左→右） -->
+          <circle cx="30" cy="38" r="2.5" fill="var(--accent-gold)" class="sp sp-1" data-station="shanyin"/>
+          <circle cx="120" cy="34" r="2" fill="var(--ink)" class="sp sp-2" data-station="jinshan"/>
+          <circle cx="210" cy="36" r="2" fill="var(--ink)" class="sp sp-3" data-station="jiankang"/>
+          <circle cx="300" cy="30" r="2" fill="var(--ink)" class="sp sp-4"/>
+          <circle cx="380" cy="32" r="2" fill="var(--ink)" class="sp sp-5"/>
+          <circle cx="460" cy="33" r="2.5" fill="var(--accent-red)" class="sp sp-6" data-station="kuizhou"/>
+          <!-- 站名文字（左→右） -->
+          <text x="30" y="56" class="sl sl-1">山阴</text>
+          <text x="120" y="56" class="sl sl-2">镇江府</text>
+          <text x="210" y="56" class="sl sl-3">建康府</text>
+          <text x="300" y="56" class="sl sl-4">江州</text>
+          <text x="380" y="56" class="sl sl-5">江陵府</text>
+          <text x="460" y="56" class="sl sl-6">夔州</text>
+          <!-- 墨船（右端=夔州） -->
+          <g class="ink-boat">
+            <path d="M454,32 Q458,38 466,36 L470,32 Q466,30 462,31 Q458,29 454,32Z" fill="var(--ink)" opacity="0.25"/>
+            <line x1="462" y1="31" x2="462" y2="24" stroke="var(--ink)" stroke-width="0.7" opacity="0.2"/>
+            <path d="M462,24 Q468,26 466,30" fill="none" stroke="var(--ink)" stroke-width="0.4" opacity="0.18"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- 角色预览 -->
+      <div class="characters-preview">
+        <div class="character-card liuxiaoliu-card">
+          <img src="../assets/characters/liuxiaoliu_wave.png" alt="陆小六" class="character-img">
+          <div class="character-label">
+            <span class="character-name">陆小六</span>
+            <span class="character-role">诗旅向导</span>
+          </div>
+        </div>
+        <div class="character-card linu-card">
+          <img src="../assets/characters/linu_juzi_play.png" alt="狸奴" class="character-img">
+          <div class="character-label">
+            <span class="character-name">狸奴</span>
+            <span class="character-role">诗旅搭档</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="start-btn" onclick="startJourney()">
+        <span class="btn-text">踏上诗旅</span>
+        <span class="btn-ink"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== 主页面 ==================== -->
+  <section id="main" class="screen">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <span class="logo-text" onclick="backToCover()" style="cursor:pointer">入蜀记</span>
+      </div>
+      <div class="top-bar-center">
+        <div class="progress-ring">
+          <span class="progress-label">诗心碎片</span>
+          <span class="progress-count" id="fragment-count">0 / 0</span>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="nav-btn" onclick="showView('achievements')" title="成就">🏆</button>
+        <button class="nav-btn" onclick="showView('quiz')" title="诗词挑战">📝</button>
+        <button class="nav-btn" onclick="showView('poetry')" title="诗集">📖</button>
+      </div>
+    </header>
+
+    <!-- ===== 地图视图 ===== -->
+    <div id="view-map" class="view active">
+      <div class="map-container">
+        <div class="river-bg">
+          <svg class="river-svg" viewBox="0 0 100 600" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="riverGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#7EB8C9" stop-opacity="0.3"/>
+                <stop offset="50%" stop-color="#5B8FA8" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#3D7A8A" stop-opacity="0.3"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 0 C55 30, 60 60, 48 100 C36 140, 55 180, 50 220 C45 260, 60 300, 52 340 C44 380, 55 420, 50 460 C45 500, 60 540, 50 600"
+                  fill="none" stroke="url(#riverGrad)" stroke-width="12" stroke-linecap="round"/>
+            <path d="M50 0 C55 30, 60 60, 48 100 C36 140, 55 180, 50 220 C45 260, 60 300, 52 340 C44 380, 55 420, 50 460 C45 500, 60 540, 50 600"
+                  fill="none" stroke="#5B8FA8" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 8" opacity="0.6">
+              <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="2s" repeatCount="indefinite"/>
+            </path>
+          </svg>
+        </div>
+        <div class="stations-list" id="stations-list"></div>
+      </div>
+      <div class="character-bubble" id="character-bubble">
+        <div class="bubble-avatar" id="bubble-avatar-img">
+          <img src="../assets/characters/liuxiaoliu_wave.png" alt="陆小六" style="width:100%;height:100%;object-fit:contain;border-radius:50%;">
+        </div>
+        <div class="bubble-content">
+          <div class="bubble-name">陆小六</div>
+          <div class="bubble-text" id="bubble-text">点击驿站开始探索吧！</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 驿站详情视图 ===== -->
+    <div id="view-station" class="view">
+      <button class="back-btn" onclick="showView('map')">← 返回地图</button>
+      <div class="station-detail" id="station-detail"></div>
+    </div>
+
+    <!-- ===== 诗词挑战视图 ===== -->
+    <div id="view-quiz" class="view">
+      <button class="back-btn" onclick="showView('map')">← 返回地图</button>
+      <div class="quiz-container" id="quiz-container"></div>
+    </div>
+
+    <!-- ===== 诗集视图 ===== -->
+    <div id="view-poetry" class="view">
+      <button class="back-btn" onclick="showView('map')">← 返回地图</button>
+      <div class="poetry-container" id="poetry-container">
+        <h2 class="section-title">诗心共鸣</h2>
+        <div class="poetry-list" id="poetry-list"></div>
+      </div>
+    </div>
+
+    <!-- ===== 成就视图 ===== -->
+    <div id="view-achievements" class="view">
+      <button class="back-btn" onclick="showView('map')">← 返回地图</button>
+      <div class="achievements-container">
+        <h2 class="section-title">诗旅成就</h2>
+        <div class="achievements-grid" id="achievements-grid"></div>
+      </div>
+    </div>
+
+    <!-- ===== 终页 ===== -->
+    <div id="view-finale" class="view">
+      <div class="finale-container" id="finale-container"></div>
+    </div>
+  </section>
+</body>
+<script src="js/data.js?v=19"></script>
+<script src="js/shader-bg.js?v=19"></script>
+<script src="js/app.js?v=19"></script>
+  <!-- 分享卡片生成 -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+  // 启动开场页着色器
+  window.addEventListener('DOMContentLoaded', function() {
+    initOpeningShader();
+  });
+</script>
+</html>

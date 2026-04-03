@@ -232,8 +232,8 @@ function openStation(stationId) {
     <!-- 角色互动 -->
     <div class="detail-section character-interaction" style="text-align: center; padding: 24px;">
       <div class="interaction-characters">
-        <img src="${CHARACTER_ASSETS.liuxiaoliu[stationPose] || CHARACTER_ASSETS.liuxiaoliu.default}" alt="陆小六" class="interaction-img interaction-img-main">
-        <img src="${CHARACTER_ASSETS.linu[CHARACTER_ASSETS.stationCat[stationId] || 'default']}" alt="狸奴" class="interaction-img interaction-img-cat">
+        <img src="${CHARACTER_ASSETS.liuxiaoliu[stationPose] || CHARACTER_ASSETS.liuxiaoliu.default}" alt="陆小六" class="interaction-img interaction-img-main" loading="lazy">
+        <img src="${CHARACTER_ASSETS.linu[CHARACTER_ASSETS.stationCat[stationId] || 'default']}" alt="狸奴" class="interaction-img interaction-img-cat" loading="lazy">
       </div>
       <p class="interaction-quote">
         "${station.ancientModern.liuxiaoliu}"
@@ -493,28 +493,28 @@ function showToast(text) {
 // ==================== 角色素材映射 ====================
 const CHARACTER_ASSETS = {
   liuxiaoliu: {
-    default: 'assets/characters/liuxiaoliu_default.png',
-    wave: 'assets/characters/liuxiaoliu_wave.png',
-    cheer: 'assets/characters/liuxiaoliu_cheer.png',
-    think: 'assets/characters/liuxiaoliu_think.png',
-    read: 'assets/characters/liuxiaoliu_read.png',
-    sleep: 'assets/characters/liuxiaoliu_sleep.png',
-    draw: 'assets/characters/liuxiaoliu_draw.png',
-    cute: 'assets/characters/liuxiaoliu_cute.png',
-    jump: 'assets/characters/liuxiaoliu_jump.png',
-    run: 'assets/characters/liuxiaoliu_run.png'
+    default: 'assets/characters/liuxiaoliu_default.webp',
+    wave: 'assets/characters/liuxiaoliu_wave.webp',
+    cheer: 'assets/characters/liuxiaoliu_cheer.webp',
+    think: 'assets/characters/liuxiaoliu_think.webp',
+    read: 'assets/characters/liuxiaoliu_read.webp',
+    sleep: 'assets/characters/liuxiaoliu_sleep.webp',
+    draw: 'assets/characters/liuxiaoliu_draw.webp',
+    cute: 'assets/characters/liuxiaoliu_cute.webp',
+    jump: 'assets/characters/liuxiaoliu_jump.webp',
+    run: 'assets/characters/liuxiaoliu_run.webp'
   },
   linu: {
-    default: 'assets/characters/linu_default.png',
-    heimao: 'assets/characters/linu_heimao.png',
-    baimao: 'assets/characters/linu_baimao.png',
-    yinjian: 'assets/characters/linu_yinjian.png',
-    huban: 'assets/characters/linu_huban.png',
-    daimao: 'assets/characters/linu_daimao.png',
-    juzi_play: 'assets/characters/linu_juzi_play.png',
-    huima_play: 'assets/characters/linu_huima_play.png',
-    nainiu: 'assets/characters/linu_nainiu.png',
-    zongmao: 'assets/characters/linu_zongmao.png'
+    default: 'assets/characters/linu_default.webp',
+    heimao: 'assets/characters/linu_heimao.webp',
+    baimao: 'assets/characters/linu_baimao.webp',
+    yinjian: 'assets/characters/linu_yinjian.webp',
+    huban: 'assets/characters/linu_huban.webp',
+    daimao: 'assets/characters/linu_daimao.webp',
+    juzi_play: 'assets/characters/linu_juzi_play.webp',
+    huima_play: 'assets/characters/linu_huima_play.webp',
+    nainiu: 'assets/characters/linu_nainiu.webp',
+    zongmao: 'assets/characters/linu_zongmao.webp'
   },
   // 每个地点对应的狸奴花色
   stationCat: {
@@ -673,8 +673,8 @@ function showFinale() {
       </div>
 
       <div class="finale-characters">
-        <img src="${CHARACTER_ASSETS.liuxiaoliu.cheer}" alt="陆小六" class="finale-char-img">
-        <img src="${CHARACTER_ASSETS.linu.nainiu}" alt="狸奴" class="finale-char-img finale-char-img-cat">
+        <img src="${CHARACTER_ASSETS.liuxiaoliu.cheer}" alt="陆小六" class="finale-char-img" loading="lazy">
+        <img src="${CHARACTER_ASSETS.linu.nainiu}" alt="狸奴" class="finale-char-img finale-char-img-cat" loading="lazy">
       </div>
       <p class="finale-characters-text">陆小六和狸奴与你一同完成了这段诗旅！</p>
 

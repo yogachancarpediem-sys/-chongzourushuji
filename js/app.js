@@ -788,7 +788,7 @@ initBGM();
       { dot: document.querySelector('.sp-4'), text: document.querySelector('.sl-4'), ratio: 0.56 },
       { dot: document.querySelector('.sp-5'), text: document.querySelector('.sl-5'), ratio: 0.76 },
       { dot: document.querySelector('.sp-6'), text: document.querySelector('.sl-6'), ratio: 0.95 },
-      { dot: document.querySelector('.sp-7'), text: document.querySelector('.sl-7'), ratio: 1.05 }
+      { dot: document.querySelector('.sp-7'), text: document.querySelector('.sl-7'), ratio: 0.98 }
     ];
 
     stations.forEach(function(s) {

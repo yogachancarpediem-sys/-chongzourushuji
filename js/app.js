@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 《入蜀记》互动体验 - 原型逻辑
  */
 
@@ -32,7 +32,6 @@ function saveState() {
 
 // ==================== 页面切换 ====================
 function startJourney() {
-  // 暂停 shader 节省 GPU
   pauseOpeningShader();
   document.getElementById('opening').classList.remove('active');
   document.getElementById('main').classList.add('active');
@@ -40,7 +39,6 @@ function startJourney() {
   renderMap();
   updateProgress();
   showBubble('欢迎踏上诗旅！沿着长江，我们去追寻陆游的诗心吧～');
-  // 开始播放背景音乐
   const bgm = document.getElementById('bgm');
   if (bgm && !bgmPlaying) {
     bgm.play().then(() => {
@@ -51,9 +49,7 @@ function startJourney() {
 }
 
 function showView(viewName) {
-  // 隐藏所有 view
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  // 显示目标 view
   const target = document.getElementById('view-' + viewName);
   if (target) {
     target.classList.add('active');
@@ -62,26 +58,22 @@ function showView(viewName) {
   }
   state.currentView = viewName;
 
-  // 清除站点氛围主题
   const stationView = document.getElementById('view-station');
   if (stationView) {
     STATIONS.forEach(s => stationView.classList.remove('theme-' + s.id));
   }
 
-  // 按需渲染
   if (viewName === 'quiz') renderQuiz();
   if (viewName === 'poetry') renderPoetryList();
   if (viewName === 'achievements') renderAchievements();
   if (viewName === 'map') renderMap();
 }
 
-// 从路线图快速跳转到站点
 function quickJump(stationId) {
   startJourney();
   setTimeout(() => openStation(stationId), 100);
 }
 
-// 返回封面页
 function backToCover() {
   document.getElementById('main').classList.remove('active', 'screen-enter');
   document.getElementById('opening').classList.add('active');
@@ -122,7 +114,6 @@ function openStation(stationId) {
 
   state.currentStationId = stationId;
 
-  // 标记为已访问
   if (!state.visitedStations.includes(stationId)) {
     state.visitedStations.push(stationId);
     saveState();
@@ -130,7 +121,6 @@ function openStation(stationId) {
     showToast(`已解锁：${station.name}`);
   }
 
-  // 收集碎片
   station.fragments.forEach(f => {
     if (!state.collectedFragments.includes(f)) {
       state.collectedFragments.push(f);
@@ -139,16 +129,16 @@ function openStation(stationId) {
     }
   });
 
-  // 每个站点陆小六的动作
   const stationPoses = {
-    linan: 'wave',    // 临安 → 挥手（觐见皇帝）
-    shanyin: 'run',   // 山阴 → 奔跑（出发出发！）
-    fengqiao: 'read', // 枫桥 → 看书（品味诗中意境）
-    jinshan: 'wave',  // 金山 → 挥手（登高望远）
-    jiankang: 'think',// 建康 → 挠头（感慨兴亡）
-    huangzhou: 'cute',// 黄州 → 歪头（苏轼大粉丝）
-    wushan: 'draw',   // 巫山 → 画蜀（入蜀之路）
-    kuizhou: 'jump'   // 夔州 → 跳跃（终于到了！）
+    linan: 'wave',
+    shanyin: 'run',
+    fengqiao: 'read',
+    jinshan: 'wave',
+    jiankang: 'think',
+    huangzhou: 'cute',
+    wushan: 'draw',
+    kuizhou: 'jump',
+    shuzhou: 'cute'
   };
   const stationPose = stationPoses[stationId] || 'default';
   const detail = document.getElementById('station-detail');
@@ -162,13 +152,11 @@ function openStation(stationId) {
       <p class="detail-desc">${station.description}</p>
     </div>
 
-    <!-- 原文日记 -->
     <div class="detail-section">
       <div class="section-label">📜 陆游手记</div>
       <p class="diary-text">${station.diary}</p>
     </div>
 
-    <!-- 风物 -->
     <div class="detail-section">
       <div class="section-label">🏔️ 诗旅风物</div>
       <div class="scenery-tags">
@@ -185,7 +173,6 @@ function openStation(stationId) {
       ` : ''}
     </div>
 
-    <!-- 诗词 -->
     <div class="detail-section">
       <div class="section-label">📖 诗心共鸣</div>
       <div class="poem-card">
@@ -197,7 +184,6 @@ function openStation(stationId) {
       </div>
     </div>
 
-    <!-- 古今对照 -->
     <div class="detail-section">
       <div class="section-label">🔄 古今对照</div>
       <div class="am-section">
@@ -216,7 +202,6 @@ function openStation(stationId) {
       </div>
     </div>
 
-    <!-- 碎片收集 -->
     <div class="detail-section">
       <div class="section-label">✨ 诗心碎片</div>
       <div class="fragments-row">
@@ -229,7 +214,6 @@ function openStation(stationId) {
       </div>
     </div>
 
-    <!-- 角色互动 -->
     <div class="detail-section character-interaction" style="text-align: center; padding: 24px;">
       <div class="interaction-characters">
         <img src="${CHARACTER_ASSETS.liuxiaoliu[stationPose] || CHARACTER_ASSETS.liuxiaoliu.default}" alt="陆小六" class="interaction-img interaction-img-main" loading="lazy">
@@ -241,14 +225,12 @@ function openStation(stationId) {
     </div>
   `;
 
-  // 应用站点氛围主题
   const stationView = document.getElementById('view-station');
   STATIONS.forEach(s => stationView.classList.remove('theme-' + s.id));
   stationView.classList.add('theme-' + stationId);
 
   showView('station');
 
-  // 更新角色对话
   const dialogues = [
     `到了${station.name}！${station.scenery[0]}一定要去看看～`,
     `你知道吗？${station.name}也就是现在的${station.modernName.split('·')[1] || station.modernName}。`,
@@ -259,7 +241,6 @@ function openStation(stationId) {
 
   showBubble(dialogues[Math.floor(Math.random() * dialogues.length)]);
 
-  // 检查是否全部走完
   if (state.visitedStations.length >= STATIONS.length) {
     setTimeout(() => showFinale(), 1200);
   }
@@ -269,7 +250,6 @@ function openStation(stationId) {
 function renderQuiz() {
   const container = document.getElementById('quiz-container');
 
-  // 检查是否全部答完
   if (state.quizAnswered.length >= QUIZ_DATA.length) {
     container.innerHTML = `
       <div class="quiz-result">
@@ -285,7 +265,6 @@ function renderQuiz() {
     return;
   }
 
-  // 找到下一题
   const nextUnanswered = QUIZ_DATA.findIndex((_, i) => !state.quizAnswered.includes(i));
   if (nextUnanswered === -1) return;
   state.currentQuizIndex = nextUnanswered;
@@ -318,25 +297,21 @@ function renderQuiz() {
 function answerQuiz(quizIndex, optionIndex) {
   const quiz = QUIZ_DATA[quizIndex];
 
-  // 禁用所有选项
   document.querySelectorAll('.quiz-option').forEach(btn => btn.classList.add('disabled'));
 
   const options = document.querySelectorAll('.quiz-option');
   const correctIdx = quiz.options.indexOf(quiz.answer);
 
   if (quiz.options[optionIndex] === quiz.answer) {
-    // 正确
     options[optionIndex].classList.add('correct');
     state.quizCorrect++;
     showToast('✅ 回答正确！');
     showBubble('答对了！不愧是诗旅达人～', 'liuxiaoliu', 'cheer');
   } else {
-    // 错误
     options[optionIndex].classList.add('wrong');
     options[correctIdx].classList.add('correct');
     showToast('❌ 答错了，正确答案已标出');
     showBubble('没关系，记住这首诗就好～', 'liuxiaoliu', 'think');
-    // 显示提示
     document.getElementById('quiz-hint').classList.add('show');
   }
 
@@ -344,7 +319,6 @@ function answerQuiz(quizIndex, optionIndex) {
   saveState();
   updateProgress();
 
-  // 延迟后渲染下一题或结果
   setTimeout(() => renderQuiz(), 1500);
 }
 
@@ -358,7 +332,6 @@ function resetQuiz() {
 // ==================== 诗集 ====================
 function renderPoetryList() {
   const list = document.getElementById('poetry-list');
-  // 去重
   const seen = new Set();
   const poems = [];
   STATIONS.forEach(s => {
@@ -382,7 +355,6 @@ function showPoetryDetail(title, author) {
   const station = STATIONS.find(s => s.poem.title === title && s.poem.author === author);
   if (station) {
     openStation(station.id);
-    // 滚动到诗词部分
     setTimeout(() => {
       const sections = document.querySelectorAll('.detail-section');
       sections.forEach(sec => {
@@ -408,7 +380,6 @@ function renderAchievements() {
     `;
   }).join('');
 
-  // 重置进度按钮
   const container = grid.parentElement;
   let resetBtn = document.getElementById('reset-progress-btn');
   if (!resetBtn) {
@@ -421,14 +392,11 @@ function renderAchievements() {
   }
 }
 
-// 确认重置进度（二次确认）
 function confirmResetProgress() {
   const btn = document.getElementById('reset-progress-btn');
   if (btn.dataset.confirming === 'true') {
-    // 第二次点击 → 执行重置
     resetProgress();
   } else {
-    // 第一次点击 → 变为确认状态
     btn.dataset.confirming = 'true';
     btn.textContent = '⚠️ 再次点击确认重置';
     btn.classList.add('reset-btn-confirm');
@@ -463,7 +431,6 @@ function showBubble(text, character, pose) {
   const bubble = document.getElementById('bubble-text');
   bubble.textContent = text;
 
-  // 切换角色头像/动作
   if (character && pose) {
     const avatar = document.querySelector('.bubble-avatar');
     if (avatar && CHARACTER_ASSETS[character]) {
@@ -474,7 +441,7 @@ function showBubble(text, character, pose) {
 
   const container = document.getElementById('character-bubble');
   container.style.animation = 'none';
-  container.offsetHeight; // reflow
+  container.offsetHeight;
   container.style.animation = 'bubbleUp 0.5s ease-out';
 }
 
@@ -516,20 +483,19 @@ const CHARACTER_ASSETS = {
     nainiu: 'assets/characters/linu_nainiu.webp',
     zongmao: 'assets/characters/linu_zongmao.webp'
   },
-  // 每个地点对应的狸奴花色
   stationCat: {
-    linan: 'baimao',       // 临安 → 白猫（都城气派）
-    shanyin: 'huima_play', // 山阴 → 灰猫玩毛线（故乡惬意）
-    fengqiao: 'heimao',    // 枫桥夜泊 → 黑猫（夜晚氛围）
-    jinshan: 'baimao',     // 金山寺 → 白猫（佛寺清净）
-    jiankang: 'huban',     // 建康 → 虎斑（六朝沉稳）
-    huangzhou: 'zongmao',  // 黄州 → 棕猫（谪居慵懒）
-    wushan: 'yinjian',     // 巫山 → 银渐层（仙气）
-    kuizhou: 'nainiu'      // 夔州 → 奶牛猫（终到兴奋）
+    linan: 'baimao',
+    shanyin: 'huima_play',
+    fengqiao: 'heimao',
+    jinshan: 'baimao',
+    jiankang: 'huban',
+    huangzhou: 'zongmao',
+    wushan: 'yinjian',
+    kuizhou: 'nainiu',
+    shuzhou: 'daimao'
   }
 };
 
-// 设置角色图片
 function setCharacterPose(elementId, character, pose) {
   const el = document.getElementById(elementId);
   if (!el || !CHARACTER_ASSETS[character]) return;
@@ -551,7 +517,6 @@ function initBGM() {
   const bgm = document.getElementById('bgm');
   if (!bgm) return;
   bgm.volume = 0.3;
-  // 首次用户交互时尝试播放（浏览器 autoplay 策略）
   document.addEventListener('click', function firstClick() {
     if (!bgmPlaying) {
       bgm.play().then(() => {
@@ -599,35 +564,33 @@ function showFinale() {
   const collected = state.collectedFragments.length;
   const fragPct = totalFrag > 0 ? Math.round((collected / totalFrag) * 100) : 0;
 
-  // 判断评价等级
   let rank, rankDesc, rankColor;
   if (fragPct >= 100 && state.quizCorrect >= QUIZ_DATA.length) {
-    rank = '\u{1F396}'; rankDesc = '诗圣传人'; rankColor = '#C4A35A';
+    rank = '🏆'; rankDesc = '诗圣传人'; rankColor = '#C4A35A';
   } else if (fragPct >= 80) {
-    rank = '\u{1F3C6}'; rankDesc = '诗旅达人'; rankColor = '#C4A35A';
+    rank = '🏅'; rankDesc = '诗旅达人'; rankColor = '#C4A35A';
   } else if (fragPct >= 50) {
-    rank = '\u{1F4DC}'; rankDesc = '行吟诗人'; rankColor = '#5B8FA8';
+    rank = '📜'; rankDesc = '行吟诗人'; rankColor = '#5B8FA8';
   } else {
-    rank = '\u{1F4DA}'; rankDesc = '诗路新人'; rankColor = '#7A9E7E';
+    rank = '📚'; rankDesc = '诗路新人'; rankColor = '#7A9E7E';
   }
 
-  // 已解锁的成就
   const unlockedAchievements = ACHIEVEMENTS.filter(a => checkAchievement(a.id));
 
   const container = document.getElementById('finale-container');
   container.innerHTML = `
     <div class="finale-particles">
-      <span class="finale-particle fp1">\u{2728}</span>
-      <span class="finale-particle fp2">\u{2728}</span>
-      <span class="finale-particle fp3">\u{2728}</span>
-      <span class="finale-particle fp4">\u{2728}</span>
-      <span class="finale-particle fp5">\u{2728}</span>
-      <span class="finale-particle fp6">\u{2728}</span>
+      <span class="finale-particle fp1">✨</span>
+      <span class="finale-particle fp2">✨</span>
+      <span class="finale-particle fp3">✨</span>
+      <span class="finale-particle fp4">✨</span>
+      <span class="finale-particle fp5">✨</span>
+      <span class="finale-particle fp6">✨</span>
     </div>
     <div class="finale-content">
       <div class="finale-seal">诗旅圆满</div>
       <h2 class="finale-title">重走《入蜀记》</h2>
-      <p class="finale-subtitle">陆游 \u00b7 乾道六年（1170）</p>
+      <p class="finale-subtitle">陆游 · 乾道六年（1170）</p>
 
       <div class="finale-rank" style="color: ${rankColor}">
         <span class="finale-rank-icon">${rank}</span>
@@ -653,7 +616,7 @@ function showFinale() {
 
       ${unlockedAchievements.length > 0 ? `
         <div class="finale-achievements">
-          <div class="finale-section-label">\u{1F3C6} 获得成就</div>
+          <div class="finale-section-label">🏆 获得成就</div>
           <div class="finale-achievement-list">
             ${unlockedAchievements.map(a => `
               <div class="finale-achievement-item">
@@ -667,9 +630,9 @@ function showFinale() {
 
       <div class="finale-quote">
         <p class="finale-quote-text">
-          \u201c纸上得来终觉浅，绝知此事要躬行。\u201d
+          "纸上得来终觉浅，绝知此事要躬行。"
         </p>
-        <p class="finale-quote-author">\u2014\u2014 陆游《冬夜读书示子聿》</p>
+        <p class="finale-quote-author">—— 陆游《冬夜读书示子聿》</p>
       </div>
 
       <div class="finale-characters">
@@ -680,13 +643,13 @@ function showFinale() {
 
       <div class="finale-actions">
         <button class="finale-btn" onclick="showView('poetry')">
-          \u{1F4D6} 重温诗集
+          📖 重温诗集
         </button>
         <button class="finale-btn finale-btn-outline" onclick="resetProgress(); showFinale();">
-          \u{1F504} 重新体验
+          🔄 重新体验
         </button>
         <button class="finale-btn finale-btn-share" onclick="generateShareCard()">
-          \u{1F4F7} 保存成就卡片
+          📷 保存成就卡片
         </button>
       </div>
     </div>
@@ -697,7 +660,7 @@ function showFinale() {
 
 // ==================== 分享卡片生成 ====================
 function generateShareCard() {
-  showToast('\u{1F4F7} \u6b63\u5728\u751f\u6210\u5361\u7247\u2026');
+  showToast('📷 正在生成卡片…');
 
   var card = document.getElementById('share-card');
   if (!card) {
@@ -715,13 +678,13 @@ function generateShareCard() {
 
   var rankText, rankColor;
   if (fragPct >= 100 && state.quizCorrect >= QUIZ_DATA.length) {
-    rankText = '\u{1F396} \u8bd7\u5723\u4f20\u4eba'; rankColor = '#C4A35A';
+    rankText = '🏆 诗圣传人'; rankColor = '#C4A35A';
   } else if (fragPct >= 80) {
-    rankText = '\u{1F3C6} \u8bd7\u65c5\u8fbe\u4eba'; rankColor = '#C4A35A';
+    rankText = '🏅 诗旅达人'; rankColor = '#C4A35A';
   } else if (fragPct >= 50) {
-    rankText = '\u{1F4DC} \u884c\u541f\u8bd7\u4eba'; rankColor = '#5B8FA8';
+    rankText = '📜 行吟诗人'; rankColor = '#5B8FA8';
   } else {
-    rankText = '\u{1F4DA} \u8bd7\u8def\u65b0\u4eba'; rankColor = '#7A9E7E';
+    rankText = '📚 诗路新人'; rankColor = '#7A9E7E';
   }
 
   card.innerHTML =
@@ -741,7 +704,7 @@ function generateShareCard() {
     '  <div class="share-card-achievements">' +
     unlocked.map(function(a) { return '<span class="share-achievement-badge">' + a.icon + '</span>'; }).join('') +
     '  </div>' : '') +
-    '  <div class="share-card-quote">“纸上得来终觉浅，绝知此事要躬行。” —— 陆游</div>' +
+    '  <div class="share-card-quote">"纸上得来终觉浅，绝知此事要躬行。" —— 陆游</div>' +
     '</div>';
 
   card.style.display = 'block';
@@ -762,7 +725,7 @@ function generateShareCard() {
       link.download = '入蜀记_诗旅成就.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
-      showToast('\u2705 卡片已保存');
+      showToast('✅ 卡片已保存');
     }).catch(function() {
       card.style.display = 'none';
       showToast('生成失败，请截图分享');
@@ -787,7 +750,6 @@ initBGM();
       });
     });
 
-    // 点击流线区域 → 开始旅程
     var stream = document.getElementById('route-stream');
     if (stream) {
       stream.addEventListener('click', function() {
@@ -825,7 +787,8 @@ initBGM();
       { dot: document.querySelector('.sp-3'), text: document.querySelector('.sl-3'), ratio: 0.36 },
       { dot: document.querySelector('.sp-4'), text: document.querySelector('.sl-4'), ratio: 0.56 },
       { dot: document.querySelector('.sp-5'), text: document.querySelector('.sl-5'), ratio: 0.76 },
-      { dot: document.querySelector('.sp-6'), text: document.querySelector('.sl-6'), ratio: 0.95 }
+      { dot: document.querySelector('.sp-6'), text: document.querySelector('.sl-6'), ratio: 0.95 },
+      { dot: document.querySelector('.sp-7'), text: document.querySelector('.sl-7'), ratio: 1.05 }
     ];
 
     stations.forEach(function(s) {
@@ -879,18 +842,15 @@ initBGM();
       var dist = progress * totalLen;
       var pt = path.getPointAtLength(dist);
 
-      // 计算航向角（取前方一小段的方向）
       var aheadDist = Math.min(dist + 3, totalLen);
       var behindDist = Math.max(dist - 3, 0);
       var ptAhead = path.getPointAtLength(aheadDist);
       var angle = Math.atan2(ptAhead.y - pt.y, ptAhead.x - pt.x) * 180 / Math.PI;
 
-      // 移动帆船
       goldBoat.setAttribute('transform',
         'translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ') rotate(' + angle.toFixed(1) + ')');
       goldBoat.style.opacity = opacity;
 
-      // 尾波（船后方水波纹）
       var ptBehind = path.getPointAtLength(behindDist);
       var wakeLen = 40;
       var wakeEnd = path.getPointAtLength(Math.max(0, dist - wakeLen));
@@ -900,12 +860,10 @@ initBGM();
       goldWake.setAttribute('y2', ptBehind.y);
       goldWake.style.opacity = opacity * 0.25;
 
-      // 柔光晕跟随船身
       goldHalo.setAttribute('cx', pt.x);
       goldHalo.setAttribute('cy', pt.y);
       goldHalo.style.opacity = opacity * 0.08;
 
-      // 站点亮灭
       stations.forEach(function(s) {
         var shouldLight = (dist >= s.dist - 8) && (phase === 'flow' || phase === 'pause');
         if (shouldLight && !s.lit) {

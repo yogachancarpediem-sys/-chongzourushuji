@@ -10,7 +10,7 @@
   <!-- Open Graph / 微信分享 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="重走《入蜀记》：陆小六的奇幻诗旅">
-  <meta property="og:description" content="南宋乾道六年，诗人陆游从山阴出发，沿运河南下入长江，终抵夔州。一路山水之间，藏着多少诗心碎片与风物精华？">
+  <meta property="og:description" content="南宋乾道六年，诗人陆游从山阴出发，沿运河南下入长江，终抵夔州，正式入蜀。一路山水之间，藏着多少诗心碎片与风物精华？">
   <meta property="og:image" content="share-card.png">
   <meta property="og:site_name" content="入蜀记">
   <meta name="twitter:card" content="summary_large_image">
@@ -21,7 +21,7 @@
   <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%23C4A35A'/><text x='50' y='68' font-size='60' text-anchor='middle' font-family='serif' fill='%23F5F0E6'>蜀</text></svg>">
   <title>重走《入蜀记》：陆小六的奇幻诗旅</title>
-  <link rel="stylesheet" href="css/style.css?v=22">
+  <link rel="stylesheet" href="css/style.css?v=23">
   <link rel="preconnect" href="https://fonts.loli.net">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" onerror="this.remove()">
@@ -71,26 +71,27 @@
 
       <p class="description">
         南宋乾道六年（1170），诗人陆游从故乡山阴出发，<br>
-        历时近五个月，沿运河南下入长江，终抵夔州。<br>
+        历时近五个月，沿运河南下入长江，终抵夔州，正式入蜀。<br>
         一路山水之间，藏着多少诗心碎片与风物精华？
       </p>
 
       <!-- 诗旅路线 · 水墨流线 -->
+      <!-- 路线：山阴 → 镇江府 → 建康府 → 江州 → 江陵府 → 夔州 → 蜀州 -->
       <div class="route-stream" id="route-stream">
-        <svg class="stream-svg" viewBox="0 0 500 70" preserveAspectRatio="xMidYMid meet">
+        <svg class="stream-svg" viewBox="0 0 510 70" preserveAspectRatio="xMidYMid meet">
           <defs>
             <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%">
               <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- 淡墨底线（左=山阴 → 右=夔州） -->
+          <!-- 淡墨底线：山阴 → 夔州 → 蜀州（水道延伸至川西） -->
           <path id="streamPath"
-                d="M30,38 C80,28 130,42 190,32 C250,22 300,38 360,28 C400,22 440,32 475,34"
+                d="M30,38 C80,28 130,42 190,32 C250,22 300,38 360,28 C400,22 440,32 468,35 C485,37 493,34 500,36"
                 fill="none" stroke="var(--ink)" stroke-width="0.6" stroke-linecap="round"
                 opacity="0.1"/>
           <!-- 水墨晕染 -->
-          <path d="M30,38 C80,28 130,42 190,32 C250,22 300,38 360,28 C400,22 440,32 475,34"
+          <path d="M30,38 C80,28 130,42 190,32 C250,22 300,38 360,28 C400,22 440,32 468,35 C485,37 493,34 500,36"
                 fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"
                 opacity="0.02"/>
           <!-- 金光帆船（JS 控制位置与朝向） -->
@@ -112,42 +113,39 @@
           <!-- 船身柔光晕 -->
           <circle id="goldHalo" cx="0" cy="0" r="6"
                   fill="var(--accent-gold)" opacity="0"/>
-          <!-- 站点圆点（左→右） -->
+          <!-- 站点圆点（左→右：临安→山阴→镇江→建康→江州→江陵→夔州→蜀州） -->
           <circle cx="30" cy="38" r="2.5" fill="var(--accent-gold)" class="sp sp-1" data-station="shanyin"/>
           <circle cx="120" cy="34" r="2" fill="var(--ink)" class="sp sp-2" data-station="jinshan"/>
           <circle cx="210" cy="36" r="2" fill="var(--ink)" class="sp sp-3" data-station="jiankang"/>
           <circle cx="300" cy="30" r="2" fill="var(--ink)" class="sp sp-4"/>
           <circle cx="380" cy="32" r="2" fill="var(--ink)" class="sp sp-5"/>
           <circle cx="460" cy="33" r="2.5" fill="var(--accent-red)" class="sp sp-6" data-station="kuizhou"/>
-          <!-- 站名文字（左→右） -->
+          <circle cx="498" cy="36" r="2.5" fill="var(--accent-teal)" class="sp sp-7" data-station="shuzhou"/>
+          <!-- 站名文字 -->
           <text x="30" y="56" class="sl sl-1">山阴</text>
           <text x="120" y="56" class="sl sl-2">镇江府</text>
           <text x="210" y="56" class="sl sl-3">建康府</text>
           <text x="300" y="56" class="sl sl-4">江州</text>
           <text x="380" y="56" class="sl sl-5">江陵府</text>
           <text x="460" y="56" class="sl sl-6">夔州</text>
-          <!-- 墨船（右端=夔州） -->
-          <g class="ink-boat">
-            <path d="M454,32 Q458,38 466,36 L470,32 Q466,30 462,31 Q458,29 454,32Z" fill="var(--ink)" opacity="0.25"/>
-            <line x1="462" y1="31" x2="462" y2="24" stroke="var(--ink)" stroke-width="0.7" opacity="0.2"/>
-            <path d="M462,24 Q468,26 466,30" fill="none" stroke="var(--ink)" stroke-width="0.4" opacity="0.18"/>
-          </g>
+          <text x="498" y="56" class="sl sl-7">蜀州</text>
+          <!-- 墨船已删除 -->
         </svg>
       </div>
 
       <!-- 角色预览 -->
       <div class="characters-preview">
         <div class="character-card liuxiaoliu-card">
-          <img src="assets/characters/liuxiaoliu_wave.webp" alt="陆小六" class="character-img" loading="lazy" loading="lazy">
+          <img src="assets/characters/liuxiaoliu_wave.webp" alt="陆小六" class="character-img" loading="lazy">
           <div class="character-label">
             <span class="character-name">陆小六</span>
             <span class="character-role">诗旅向导</span>
           </div>
         </div>
         <div class="character-card linu-card">
-          <img src="assets/characters/linu_juzi_play.webp" alt="狸奴" class="character-img" loading="lazy" loading="lazy">
+          <img src="assets/characters/linu_new.webp" alt="狸奴" class="character-img" loading="lazy">
           <div class="character-label">
-            <span class="character-name">狸奴</span>
+            <span class="character-name">喵喵芭迪</span>
             <span class="character-role">诗旅搭档</span>
           </div>
         </div>
@@ -248,9 +246,9 @@
     </div>
   </section>
 </body>
-<script src="js/data.js?v=22"></script>
-<script src="js/shader-bg.js?v=22"></script>
-<script src="js/app.js?v=22"></script>
+<script src="js/data.js?v=23"></script>
+<script src="js/shader-bg.js?v=23"></script>
+<script src="js/app.js?v=23"></script>
   <!-- 分享卡片生成 -->
   <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script>

@@ -793,54 +793,49 @@ body {
 /* 角色对话气泡 */
 .character-bubble {
   position: fixed;
-  bottom: calc(16px + var(--safe-bottom));
+  bottom: calc(70px + var(--safe-bottom));
   left: 50%;
   transform: translateX(-50%);
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid rgba(196, 163, 90, 0.4);
+  border-radius: 20px;
+  padding: 8px 14px 8px 10px;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(44,44,44,0.08);
-  border-radius: 24px;
-  padding: 10px 20px 10px 12px;
-  max-width: 500px;
-  width: calc(100% - 32px);
-  box-shadow: var(--shadow-soft);
-  z-index: 50;
-  animation: bubbleUp 0.5s ease-out;
-  -webkit-user-select: none;
-  user-select: none;
+  align-items: flex-end;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(44, 44, 44, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
-@keyframes bubbleUp {
-  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
-  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+.character-bubble.visible {
+  opacity: 1;
 }
 
 .bubble-avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-gold), #D4B36A);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .bubble-name {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--accent-gold);
-  font-weight: 500;
+  margin-bottom: 2px;
 }
 
 .bubble-text {
-  font-size: 0.85rem;
-  color: var(--ink-light);
-  line-height: 1.5;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ink);
+  font-family: var(--font-body);
 }
 
 /* ==================== 驿站详情视图 ==================== */
@@ -1622,10 +1617,24 @@ body {
   }
 
   .character-bubble {
-    width: calc(100% - 24px);
-    padding: 8px 16px 8px 10px;
-    bottom: calc(12px + var(--safe-bottom));
-  }
+  bottom: calc(60px + var(--safe-bottom));
+  max-width: 280px;
+  gap: 8px;
+}
+
+.bubble-avatar {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+}
+
+.bubble-name {
+  font-size: 0.65rem;
+}
+
+.bubble-text {
+  font-size: 0.78rem;
+}
 
   .am-row { flex-direction: column; gap: 4px; }
   .am-label { min-width: auto; display: inline-block; }

@@ -807,13 +807,6 @@ body {
   box-shadow: 0 4px 20px rgba(44, 44, 44, 0.12);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.character-bubble.visible {
-  opacity: 1;
 }
 
 .bubble-avatar {
@@ -823,19 +816,24 @@ body {
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
+  background: linear-gradient(135deg, #C4A35A, #D4B36A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bubble-name {
   font-size: 0.68rem;
-  color: var(--accent-gold);
+  color: #C4A35A;
   margin-bottom: 2px;
+  font-weight: 500;
 }
 
 .bubble-text {
   font-size: 0.8rem;
   line-height: 1.4;
-  color: var(--ink);
-  font-family: var(--font-body);
+  color: #5A5A5A;
+  font-family: 'Noto Serif SC', serif;
 }
 
 /* ==================== 驿站详情视图 ==================== */
@@ -1616,25 +1614,23 @@ body {
     touch-action: manipulation;
   }
 
-  .character-bubble {
-  bottom: calc(60px + var(--safe-bottom));
-  max-width: 280px;
-  gap: 8px;
-}
-
-.bubble-avatar {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-}
-
-.bubble-name {
-  font-size: 0.65rem;
-}
-
-.bubble-text {
-  font-size: 0.78rem;
-}
+    .character-bubble {
+    bottom: calc(60px + var(--safe-bottom));
+    max-width: 280px;
+    gap: 8px;
+    padding: 6px 12px 6px 8px;
+  }
+  .bubble-avatar {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+  }
+  .bubble-name {
+    font-size: 0.65rem;
+  }
+  .bubble-text {
+    font-size: 0.78rem;
+  }
 
   .am-row { flex-direction: column; gap: 4px; }
   .am-label { min-width: auto; display: inline-block; }

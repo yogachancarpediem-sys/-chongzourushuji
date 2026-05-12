@@ -793,22 +793,50 @@ body {
 /* 角色对话气泡 */
 .character-bubble {
   position: fixed;
-  bottom: calc(80px + var(--safe-bottom));  /* ← 导航栏（约60px）上方 */
+  bottom: calc(80px + var(--safe-bottom));
   left: 50%;
   transform: translateX(-50%);
-  z-index: 999;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1.5px solid rgba(196, 163, 90, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(44,44,44,0.08);
   border-radius: 20px;
   padding: 8px 14px 8px 10px;
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  box-shadow: 0 4px 20px rgba(44, 44, 44, 0.12);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  max-width: 300px;           /* ← 最大宽度限制 */
+  width: calc(100% - 32px);   /* ← 这一行最关键！防止撑满屏幕 */
+  box-shadow: 0 2px 20px rgba(44,44,44,0.08);
+  z-index: 50;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
+.bubble-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C4A35A, #D4B36A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  overflow: hidden;
+}
+
+.bubble-name {
+  font-size: 0.68rem;
+  color: #C4A35A;
+  font-weight: 500;
+}
+
+.bubble-text {
+  font-size: 0.8rem;
+  color: #5A5A5A;
+  line-height: 1.4;
+}
 
 /* ==================== 驿站详情视图 ==================== */
 .station-detail {
@@ -1589,12 +1617,16 @@ body {
   }
 
     .character-bubble {
-    top: calc(60px + var(--safe-top));  /* ← 顶部定位 */
-    max-width: 280px;
-    gap: 8px;
-    padding: 6px 12px 6px 8px;
-  }
-  ...
+  bottom: calc(70px + var(--safe-bottom));
+  max-width: 280px;
+  width: calc(100% - 24px);
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+}
+.bubble-avatar {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
 }
 
   .am-row { flex-direction: column; gap: 4px; }

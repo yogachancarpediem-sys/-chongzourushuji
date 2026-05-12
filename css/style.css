@@ -793,7 +793,7 @@ body {
 /* 角色对话气泡 */
 .character-bubble {
   position: fixed;
-  bottom: calc(70px + var(--safe-bottom));
+  bottom: calc(80px + var(--safe-bottom));  /* ← 导航栏（约60px）上方 */
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
@@ -809,32 +809,6 @@ body {
   -webkit-backdrop-filter: blur(10px);
 }
 
-.bubble-avatar {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: linear-gradient(135deg, #C4A35A, #D4B36A);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bubble-name {
-  font-size: 0.68rem;
-  color: #C4A35A;
-  margin-bottom: 2px;
-  font-weight: 500;
-}
-
-.bubble-text {
-  font-size: 0.8rem;
-  line-height: 1.4;
-  color: #5A5A5A;
-  font-family: 'Noto Serif SC', serif;
-}
 
 /* ==================== 驿站详情视图 ==================== */
 .station-detail {
@@ -1615,22 +1589,13 @@ body {
   }
 
     .character-bubble {
-    bottom: calc(60px + var(--safe-bottom));
+    top: calc(60px + var(--safe-top));  /* ← 顶部定位 */
     max-width: 280px;
     gap: 8px;
     padding: 6px 12px 6px 8px;
   }
-  .bubble-avatar {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-  }
-  .bubble-name {
-    font-size: 0.65rem;
-  }
-  .bubble-text {
-    font-size: 0.78rem;
-  }
+  ...
+}
 
   .am-row { flex-direction: column; gap: 4px; }
   .am-label { min-width: auto; display: inline-block; }

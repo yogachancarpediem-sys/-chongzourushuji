@@ -150,7 +150,7 @@ function openStation(stationId) {
       <div class="detail-date">${station.date}</div>
       <div class="detail-divider"></div>
       <p class="detail-desc">${station.description}</p>
-      <button class="daily-card-btn" onclick="generateDailyCard('${stationId}')">📷 生成日签</button>
+      <button class="daily-card-btn" onclick="generateDailyCard('${stationId}')">📷 生成诗签</button>
     </div>
 
     <div class="detail-section">
@@ -922,7 +922,7 @@ function saveDailyCard() {
   var card = document.getElementById('dc-card');
   if (!card) return;
 
-  showToast('\uD83D\uDCF7 正在生成日签\u2026');
+  showToast('\uD83D\uDCF7 正在生成诗签\u2026');
 
   /* 等待角色图片加载 */
   var images = card.querySelectorAll('img');
@@ -944,10 +944,10 @@ function saveDailyCard() {
         var station = STATIONS.find(function(s) { return s.id === state.currentStationId; });
         var name = station ? station.name : '入蜀记';
         var link = document.createElement('a');
-        link.download = '入蜀记_' + name + '_日签.png';
+        link.download = '入蜀记_' + name + '_诗签.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
-        showToast('\u2705 日签已保存');
+        showToast('\u2705 诗签已保存');
       }).catch(function() {
         showToast('生成失败，请长按卡片截图保存');
       });

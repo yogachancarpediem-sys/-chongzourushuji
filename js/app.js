@@ -690,6 +690,9 @@ function generateShareCard() {
 
   card.innerHTML =
     '<div class="share-card-inner">' +
+    /* 风景插画背景 */
+    '  <div class="share-card-scenery"></div>' +
+    '  <div class="share-card-scenery-overlay"></div>' +
     '  <div class="share-card-header">' +
     '    <div class="share-card-seal"><span>入</span><span>蜀</span><span>记</span></div>' +
     '    <div class="share-card-title">重走《入蜀记》</div>' +

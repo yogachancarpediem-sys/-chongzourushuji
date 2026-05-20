@@ -2165,9 +2165,45 @@ body {
   text-align: center;
   box-shadow: 0 8px 40px rgba(0,0,0,0.15);
   border: 2px solid var(--accent-gold);
+  position: relative;
+  overflow: hidden;
+}
+/* 成就卡片风景插画底层 */
+.share-card-scenery {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/scenery/finale.png');
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  opacity: 0.28;
+  z-index: 0;
+  pointer-events: none;
+}
+/* 成就卡片插画遮罩层 */
+.share-card-scenery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 240, 230, 0.55) 0%,
+    rgba(245, 240, 230, 0.35) 25%,
+    rgba(245, 240, 230, 0.50) 55%,
+    rgba(245, 240, 230, 0.88) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
 }
 .share-card-header {
   margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
 }
 .share-card-seal {
   display: inline-flex;
@@ -2230,12 +2266,16 @@ body {
   font-size: 1.6rem;
   margin-bottom: 20px;
   letter-spacing: 2px;
+  position: relative;
+  z-index: 2;
 }
 .share-card-stats {
   display: flex;
   justify-content: center;
   gap: 24px;
   margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
 }
 .share-card-stat {
   display: flex;
@@ -2257,6 +2297,8 @@ body {
   justify-content: center;
   gap: 8px;
   margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
 }
 .share-achievement-badge {
   font-size: 1.4rem;
@@ -2267,6 +2309,8 @@ body {
   font-style: italic;
   border-top: 1px solid var(--parchment-dark);
   padding-top: 16px;
+  position: relative;
+  z-index: 2;
   line-height: 1.6;
 }
 

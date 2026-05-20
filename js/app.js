@@ -663,78 +663,99 @@ function showFinale() {
 function generateShareCard() {
   showToast('📷 正在生成卡片…');
 
-  var card = document.getElementById('share-card');
-  if (!card) {
-    card = document.createElement('div');
-    card.id = 'share-card';
-    document.body.appendChild(card);
-  }
+  /* 先预加载罨画池插画，确保截图时背景图已就绪 */
+  var sceneryImg = new Image();
+  sceneryImg.src = 'assets/scenery/finale.png';
 
-  var total = STATIONS.length;
-  var visited = state.visitedStations.length;
-  var totalFrag = getTotalFragments();
-  var collected = state.collectedFragments.length;
-  var fragPct = totalFrag > 0 ? Math.round((collected / totalFrag) * 100) : 0;
-  var unlocked = ACHIEVEMENTS.filter(function(a) { return checkAchievement(a.id); });
-
-  var rankText, rankColor;
-  if (fragPct >= 100 && state.quizCorrect >= QUIZ_DATA.length) {
-    rankText = '🏆 诗圣传人'; rankColor = '#C4A35A';
-  } else if (fragPct >= 80) {
-    rankText = '🏅 诗旅达人'; rankColor = '#C4A35A';
-  } else if (fragPct >= 50) {
-    rankText = '📜 行吟诗人'; rankColor = '#5B8FA8';
-  } else {
-    rankText = '📚 诗路新人'; rankColor = '#7A9E7E';
-  }
-
-  card.innerHTML =
-    '<div class="share-card-inner">' +
-    /* 风景插画背景 */
-    '  <div class="share-card-scenery"></div>' +
-    '  <div class="share-card-scenery-overlay"></div>' +
-    '  <div class="share-card-header">' +
-    '    <div class="share-card-seal"><span>入</span><span>蜀</span><span>记</span></div>' +
-    '    <div class="share-card-title">重走《入蜀记》</div>' +
-    '    <div class="share-card-subtitle">陆游 · 干道六年（1170）</div>' +
-    '  </div>' +
-    '  <div class="share-card-rank" style="color:' + rankColor + '">' + rankText + '</div>' +
-    '  <div class="share-card-stats">' +
-    '    <div class="share-card-stat"><span class="share-stat-num">' + visited + '/' + total + '</span><span class="share-stat-label">驿站</span></div>' +
-    '    <div class="share-card-stat"><span class="share-stat-num">' + collected + '/' + totalFrag + '</span><span class="share-stat-label">碎片</span></div>' +
-    '    <div class="share-card-stat"><span class="share-stat-num">' + state.quizCorrect + '/' + QUIZ_DATA.length + '</span><span class="share-stat-label">诗题</span></div>' +
-    '  </div>' +
-    (unlocked.length > 0 ?
-    '  <div class="share-card-achievements">' +
-    unlocked.map(function(a) { return '<span class="share-achievement-badge">' + a.icon + '</span>'; }).join('') +
-    '  </div>' : '') +
-    '  <div class="share-card-quote">"纸上得来终觉浅，绝知此事要躬行。" —— 陆游</div>' +
-    '</div>';
-
-  card.style.display = 'block';
-
-  setTimeout(function() {
-    if (typeof html2canvas === 'undefined') {
-      showToast('请稍后再试（图片库加载中）');
-      return;
+  function doGenerate() {
+    var card = document.getElementById('share-card');
+    if (!card) {
+      card = document.createElement('div');
+      card.id = 'share-card';
+      document.body.appendChild(card);
     }
-    html2canvas(card.querySelector('.share-card-inner'), {
-      backgroundColor: '#F5F0E6',
-      scale: 2,
-      useCORS: true,
-      logging: false
-    }).then(function(canvas) {
-      card.style.display = 'none';
-      var link = document.createElement('a');
-      link.download = '入蜀记_诗旅成就.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-      showToast('✅ 卡片已保存');
-    }).catch(function() {
-      card.style.display = 'none';
-      showToast('生成失败，请截图分享');
-    });
-  }, 300);
+
+    var total = STATIONS.length;
+    var visited = state.visitedStations.length;
+    var totalFrag = getTotalFragments();
+    var collected = state.collectedFragments.length;
+    var fragPct = totalFrag > 0 ? Math.round((collected / totalFrag) * 100) : 0;
+    var unlocked = ACHIEVEMENTS.filter(function(a) { return checkAchievement(a.id); });
+
+    var rankText, rankColor;
+    if (fragPct >= 100 && state.quizCorrect >= QUIZ_DATA.length) {
+      rankText = '🏆 诗圣传人'; rankColor = '#C4A35A';
+    } else if (fragPct >= 80) {
+      rankText = '🏅 诗旅达人'; rankColor = '#C4A35A';
+    } else if (fragPct >= 50) {
+      rankText = '📜 行吟诗人'; rankColor = '#5B8FA8';
+    } else {
+      rankText = '📚 诗路新人'; rankColor = '#7A9E7E';
+    }
+
+    card.innerHTML =
+      '<div class="share-card-inner">' +
+      /* 风景插画背景 */
+      '  <div class="share-card-scenery" style="background-image:url(assets/scenery/finale.png);"></div>' +
+      '  <div class="share-card-scenery-overlay"></div>' +
+      '  <div class="share-card-header">' +
+      '    <div class="share-card-seal"><span>入</span><span>蜀</span><span>记</span></div>' +
+      '    <div class="share-card-title">重走《入蜀记》</div>' +
+      '    <div class="share-card-subtitle">陆游 · 干道六年（1170）</div>' +
+      '  </div>' +
+      '  <div class="share-card-rank" style="color:' + rankColor + '">' + rankText + '</div>' +
+      '  <div class="share-card-stats">' +
+      '    <div class="share-card-stat"><span class="share-stat-num">' + visited + '/' + total + '</span><span class="share-stat-label">驿站</span></div>' +
+      '    <div class="share-card-stat"><span class="share-stat-num">' + collected + '/' + totalFrag + '</span><span class="share-stat-label">碎片</span></div>' +
+      '    <div class="share-card-stat"><span class="share-stat-num">' + state.quizCorrect + '/' + QUIZ_DATA.length + '</span><span class="share-stat-label">诗题</span></div>' +
+      '  </div>' +
+      (unlocked.length > 0 ?
+      '  <div class="share-card-achievements">' +
+      unlocked.map(function(a) { return '<span class="share-achievement-badge">' + a.icon + '</span>'; }).join('') +
+      '  </div>' : '') +
+      '  <div class="share-card-quote">"纸上得来终觉浅，绝知此事要躬行。" —— 陆游</div>' +
+      '</div>';
+
+    card.style.display = 'block';
+
+    setTimeout(function() {
+      if (typeof html2canvas === 'undefined') {
+        showToast('请稍后再试（图片库加载中）');
+        return;
+      }
+      html2canvas(card.querySelector('.share-card-inner'), {
+        backgroundColor: '#F5F0E6',
+        scale: 2,
+        useCORS: true,
+        logging: false
+      }).then(function(canvas) {
+        card.style.display = 'none';
+        var link = document.createElement('a');
+        link.download = '入蜀记_诗旅成就.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('✅ 卡片已保存');
+      }).catch(function() {
+        card.style.display = 'none';
+        showToast('生成失败，请截图分享');
+      });
+    }, 500);
+  }
+
+  /* 等待插画加载完成后再生成卡片 */
+  if (sceneryImg.complete && sceneryImg.naturalWidth > 0) {
+    doGenerate();
+  } else {
+    sceneryImg.onload = doGenerate;
+    sceneryImg.onerror = function() {
+      /* 插画加载失败也继续生成（无背景） */
+      doGenerate();
+    };
+    /* 5秒超时兜底 */
+    setTimeout(function() {
+      if (!sceneryImg.complete) doGenerate();
+    }, 5000);
+  }
 }
 
 // ==================== 日签诗歌卡片 ====================

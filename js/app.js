@@ -701,7 +701,7 @@ function generateShareCard() {
       '  <div class="share-card-header">' +
       '    <div class="share-card-seal"><span>入</span><span>蜀</span><span>记</span></div>' +
       '    <div class="share-card-title">重走《入蜀记》</div>' +
-      '    <div class="share-card-subtitle">陆游 · 干道六年（1170）</div>' +
+      '    <div class="share-card-subtitle">陆游 · 乾道六年（1170）</div>' +
       '  </div>' +
       '  <div class="share-card-rank" style="color:' + rankColor + '">' + rankText + '</div>' +
       '  <div class="share-card-stats">' +

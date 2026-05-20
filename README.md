@@ -1,3 +1,7 @@
+## Preview
+
+![preview](./assets/cover1.png)
+
 # 重走入蜀记
 
 一个基于陆游《入蜀记》的 interactive web 互动体验作品，融合水墨美学与古代行记，带你重走千年前的入蜀之路。

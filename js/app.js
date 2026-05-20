@@ -150,6 +150,7 @@ function openStation(stationId) {
       <div class="detail-date">${station.date}</div>
       <div class="detail-divider"></div>
       <p class="detail-desc">${station.description}</p>
+      <button class="daily-card-btn" onclick="generateDailyCard('${stationId}')">📷 生成日签</button>
     </div>
 
     <div class="detail-section">
@@ -588,7 +589,7 @@ function showFinale() {
       <span class="finale-particle fp6">✨</span>
     </div>
     <div class="finale-content">
-      <div class="finale-seal">诗旅圆满</div>
+      <div class="finale-seal"><span>诗</span><span>旅</span><span>圆</span><span>满</span></div>
       <h2 class="finale-title">重走《入蜀记》</h2>
       <p class="finale-subtitle">陆游 · 乾道六年（1170）</p>
 
@@ -690,7 +691,7 @@ function generateShareCard() {
   card.innerHTML =
     '<div class="share-card-inner">' +
     '  <div class="share-card-header">' +
-    '    <div class="share-card-seal">入蜀记</div>' +
+    '    <div class="share-card-seal"><span>入</span><span>蜀</span><span>记</span></div>' +
     '    <div class="share-card-title">重走《入蜀记》</div>' +
     '    <div class="share-card-subtitle">陆游 · 干道六年（1170）</div>' +
     '  </div>' +
@@ -731,6 +732,228 @@ function generateShareCard() {
       showToast('生成失败，请截图分享');
     });
   }, 300);
+}
+
+// ==================== 日签诗歌卡片 ====================
+
+/* 每站精选诗句索引（从 poem.lines 取最传神的 2~4 句） */
+var STATION_CARD_LINES = {
+  linan:    [2, 3],   // 小楼一夜听春雨，深巷明朝卖杏花
+  shanyin:  [2, 3],   // 山重水复疑无路，柳暗花明又一村
+  fengqiao: [2, 3],   // 姑苏城外寒山寺，夜半钟声到客船
+  jinshan:  [0, 1],   // 僧于玉鉴光中坐，客蹋金鳌背上行
+  jiankang: [2, 3],   // 旧时王谢堂前燕，飞入寻常百姓家
+  huangzhou:[0, 1],   // 大江东去，浪淘尽，千古风流人物
+  wushan:   [0, 1],   // 昔者楚襄王与宋玉游于云梦之台……
+  kuizhou:  [2, 3],   // 无边落木萧萧下，不尽长江滚滚来
+  shuzhou:  [6, 7]    // 江湖四十余年梦，岂信人间有蜀州
+};
+
+/* 驿站主题色 */
+var STATION_ACCENT = {
+  linan:    '#C4A35A',
+  shanyin:  '#7A9E7E',
+  fengqiao: '#5B8FA8',
+  jinshan:  '#C4A35A',
+  jiankang: '#8B7355',
+  huangzhou:'#B85450',
+  wushan:   '#7EB8C9',
+  kuizhou:  '#C4A35A',
+  shuzhou:  '#7A9E7E'
+};
+
+/* 驿站卡片背景渐变 */
+var STATION_CARD_BG = {
+  linan:    'linear-gradient(180deg, #F0EDE4 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  shanyin:  'linear-gradient(180deg, #EEF0E8 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  fengqiao: 'linear-gradient(180deg, #E8EAF2 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  jinshan:  'linear-gradient(180deg, #F5ECD0 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  jiankang: 'linear-gradient(180deg, #F0E8DA 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  huangzhou:'linear-gradient(180deg, #F5E0D8 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  wushan:   'linear-gradient(180deg, #E0E8F0 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  kuizhou:  'linear-gradient(180deg, #F0D8C8 0%, #F5F0E6 35%, #F5F0E6 100%)',
+  shuzhou:  'linear-gradient(180deg, #E5F0E5 0%, #F5F0E6 35%, #F5F0E6 100%)'
+};
+
+function generateDailyCard(stationId) {
+  var station = STATIONS.find(function(s) { return s.id === stationId; });
+  if (!station) return;
+
+  /* hex转rgba辅助函数 */
+  function hexRgba(hex, a) {
+    var r = parseInt(hex.slice(1, 3), 16);
+    var g = parseInt(hex.slice(3, 5), 16);
+    var b = parseInt(hex.slice(5, 7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+  }
+
+  var stationPoses = {
+    linan:'wave', shanyin:'run', fengqiao:'read',
+    jinshan:'wave', jiankang:'think', huangzhou:'cute',
+    wushan:'draw', kuizhou:'jump', shuzhou:'cute'
+  };
+  var pose = stationPoses[stationId] || 'default';
+  var catType = CHARACTER_ASSETS.stationCat[stationId] || 'default';
+  var accent = STATION_ACCENT[stationId] || '#C4A35A';
+  var bg = STATION_CARD_BG[stationId] || 'linear-gradient(180deg, #F5F0E6 0%, #F5F0E6 100%)';
+
+  /* 精选诗句 */
+  var lineIndices = STATION_CARD_LINES[stationId] || [0, 1];
+  var selectedLines = lineIndices.map(function(i) { return station.poem.lines[i]; }).filter(Boolean);
+
+  /* 今日日期 */
+  var now = new Date();
+  var mm = now.getMonth() + 1;
+  var dd = now.getDate();
+  var today = now.getFullYear() + '.' + (mm < 10 ? '0' + mm : mm) + '.' + (dd < 10 ? '0' + dd : dd);
+
+  /* 星期 */
+  var weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+  var weekDay = '周' + weekDays[now.getDay()];
+
+  /* 创建模态 */
+  var old = document.getElementById('dc-modal');
+  if (old) old.remove();
+
+  var modal = document.createElement('div');
+  modal.id = 'dc-modal';
+  modal.className = 'dc-modal';
+
+  modal.innerHTML =
+    '<div class="dc-card" id="dc-card">' +
+      '<div class="dc-inner" style="background:' + bg + ';">' +
+        /* 水墨晕染装饰 */
+        '<div style="position:absolute;width:220px;height:220px;top:-70px;right:-50px;' +
+          'background:radial-gradient(circle,' + hexRgba(accent, 0.1) + ',transparent 70%);' +
+          'border-radius:50%;pointer-events:none;z-index:0;"></div>' +
+        '<div style="position:absolute;width:180px;height:180px;bottom:50px;left:-55px;' +
+          'background:radial-gradient(circle,' + hexRgba(accent, 0.06) + ',transparent 70%);' +
+          'border-radius:50%;pointer-events:none;z-index:0;"></div>' +
+        /* 印章 */
+        '<div class="dc-seal"><span>入</span><span>蜀</span><span>记</span></div>' +
+        /* 驿站名 */
+        '<div class="dc-station-name">' + station.name + '</div>' +
+        '<div class="dc-modern-name">' + station.modernName + '</div>' +
+        '<div class="dc-ancient-date">' + station.date + '</div>' +
+        /* 分割线 */
+        '<div class="dc-divider">' +
+          '<div class="dc-divider-line" style="background:' + accent + ';"></div>' +
+          '<div class="dc-divider-dot" style="background:' + accent + ';"></div>' +
+          '<div class="dc-divider-line" style="background:' + accent + ';"></div>' +
+        '</div>' +
+        /* 诗词 */
+        '<div class="dc-poem-section">' +
+          '<div class="dc-poem-title">\u300A' + station.poem.title + '\u300B</div>' +
+          '<div class="dc-poem-author">' + station.poem.author + '</div>' +
+          '<div class="dc-poem-lines">' +
+            selectedLines.map(function(l) { return '<div class="dc-poem-line">' + l + '</div>'; }).join('') +
+          '</div>' +
+        '</div>' +
+        /* 分割线 */
+        '<div class="dc-divider">' +
+          '<div class="dc-divider-line" style="background:' + accent + ';"></div>' +
+          '<div class="dc-divider-dot" style="background:' + accent + ';"></div>' +
+          '<div class="dc-divider-line" style="background:' + accent + ';"></div>' +
+        '</div>' +
+        /* 底部 */
+        '<div class="dc-footer">' +
+          '<div class="dc-characters">' +
+            '<img src="' + CHARACTER_ASSETS.liuxiaoliu[pose] + '" alt="\u9646\u5C0F\u516D" class="dc-char-img">' +
+            '<img src="' + CHARACTER_ASSETS.linu[catType] + '" alt="\u72F8\u5974" class="dc-char-img dc-char-cat">' +
+          '</div>' +
+          '<div class="dc-branding">' +
+            '<div class="dc-today">' + today + ' ' + weekDay + '</div>' +
+            '<div class="dc-brand-name" style="color:' + accent + ';">重走\u300A入蜀记\u300B</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="dc-actions">' +
+      '<button class="dc-save-btn" onclick="saveDailyCard()">\uD83D\uDCF7 保存到相册</button>' +
+      '<button class="dc-close-btn" onclick="closeDailyCard()">关闭</button>' +
+    '</div>';
+
+  document.body.appendChild(modal);
+
+  /* 点击遮罩关闭 */
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeDailyCard();
+  });
+
+  /* ESC 关闭 */
+  var escHandler = function(e) {
+    if (e.key === 'Escape') {
+      closeDailyCard();
+      document.removeEventListener('keydown', escHandler);
+    }
+  };
+  document.addEventListener('keydown', escHandler);
+}
+
+function closeDailyCard() {
+  var modal = document.getElementById('dc-modal');
+  if (modal) {
+    modal.style.animation = 'dcFadeIn 0.25s ease-out reverse';
+    setTimeout(function() { modal.remove(); }, 250);
+  }
+}
+
+function saveDailyCard() {
+  var card = document.getElementById('dc-card');
+  if (!card) return;
+
+  showToast('\uD83D\uDCF7 正在生成日签\u2026');
+
+  /* 等待角色图片加载 */
+  var images = card.querySelectorAll('img');
+  var loaded = 0;
+  var total = images.length;
+
+  function tryCapture() {
+    setTimeout(function() {
+      if (typeof html2canvas === 'undefined') {
+        showToast('请稍后再试（图片库加载中）');
+        return;
+      }
+      html2canvas(card, {
+        backgroundColor: '#F5F0E6',
+        scale: 2,
+        useCORS: true,
+        logging: false
+      }).then(function(canvas) {
+        var station = STATIONS.find(function(s) { return s.id === state.currentStationId; });
+        var name = station ? station.name : '入蜀记';
+        var link = document.createElement('a');
+        link.download = '入蜀记_' + name + '_日签.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('\u2705 日签已保存');
+      }).catch(function() {
+        showToast('生成失败，请长按卡片截图保存');
+      });
+    }, 400);
+  }
+
+  if (total === 0) {
+    tryCapture();
+    return;
+  }
+
+  images.forEach(function(img) {
+    if (img.complete) {
+      loaded++;
+      if (loaded >= total) tryCapture();
+    } else {
+      img.onload = function() {
+        loaded++;
+        if (loaded >= total) tryCapture();
+      };
+      img.onerror = function() {
+        loaded++;
+        if (loaded >= total) tryCapture();
+      };
+    }
+  });
 }
 
 // ==================== 初始化 ====================

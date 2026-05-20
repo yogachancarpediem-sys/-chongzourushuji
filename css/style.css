@@ -175,6 +175,9 @@ body {
   color: #D4A0A0;
   border-color: rgba(180,100,100,0.6);
 }
+#opening.shader-active .seal::before {
+  border-color: rgba(180,100,100,0.25);
+}
 #opening.shader-active .title {
   color: rgba(245,240,230,0.95);
   text-shadow: 0 2px 30px rgba(0,0,0,0.4);
@@ -329,16 +332,51 @@ body {
 }
 
 .seal {
-  display: inline-block;
-  border: 1.5px solid var(--accent-red);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1px;
+  width: 44px;
+  height: 58px;
+  border: 2.5px solid var(--accent-red);
   color: var(--accent-red);
   font-family: var(--font-title);
-  font-size: 0.85rem;
-  padding: 4px 14px;
+  font-size: 0.92rem;
+  padding: 6px 4px;
   margin-bottom: 16px;
-  transform: rotate(-5deg);
-  letter-spacing: 8px;
-  opacity: 0.65;
+  transform: rotate(-3deg);
+  letter-spacing: 2px;
+  line-height: 1.4;
+  opacity: 0.78;
+  position: relative;
+  box-shadow:
+    inset 0 0 0 3px transparent,
+    inset 0 0 0 4px rgba(184, 84, 80, 0.12);
+}
+.seal span {
+  display: block;
+  text-align: center;
+  line-height: 1.4;
+}
+/* 内框 — 双栏印章 */
+.seal::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(184, 84, 80, 0.35);
+  pointer-events: none;
+}
+/* 做旧斑驳 — 模拟印泥不均匀 */
+.seal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(245,240,230,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(245,240,230,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 45%, rgba(245,240,230,0.1) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 .title {
@@ -1737,16 +1775,49 @@ body {
 }
 
 .finale-seal {
-  display: inline-block;
-  border: 1.5px solid var(--accent-red);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1px;
+  width: 44px;
+  height: 72px;
+  border: 2.5px solid var(--accent-red);
   color: var(--accent-red);
   font-family: var(--font-title);
-  font-size: 0.9rem;
-  padding: 5px 18px;
+  font-size: 0.92rem;
+  padding: 6px 5px;
   margin-bottom: 20px;
-  transform: rotate(-5deg);
-  letter-spacing: 8px;
-  opacity: 0.7;
+  transform: rotate(-3deg);
+  letter-spacing: 2px;
+  line-height: 1.4;
+  opacity: 0.78;
+  position: relative;
+  box-shadow:
+    inset 0 0 0 3px transparent,
+    inset 0 0 0 4px rgba(184, 84, 80, 0.12);
+}
+.finale-seal span {
+  display: block;
+  text-align: center;
+  line-height: 1.4;
+}
+.finale-seal::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(184, 84, 80, 0.35);
+  pointer-events: none;
+}
+.finale-seal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(245,240,230,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(245,240,230,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 45%, rgba(245,240,230,0.1) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 .finale-title {
@@ -2099,15 +2170,49 @@ body {
   margin-bottom: 20px;
 }
 .share-card-seal {
-  display: inline-block;
-  border: 2px solid var(--accent-red);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1px;
+  width: 42px;
+  height: 56px;
+  border: 2.5px solid var(--accent-red);
   color: var(--accent-red);
   font-family: var(--font-title);
   font-size: 0.85rem;
-  padding: 4px 12px;
+  padding: 6px 4px;
   transform: rotate(-3deg);
-  letter-spacing: 3px;
+  letter-spacing: 2px;
+  line-height: 1.4;
   margin-bottom: 12px;
+  opacity: 0.78;
+  position: relative;
+  box-shadow:
+    inset 0 0 0 3px transparent,
+    inset 0 0 0 4px rgba(184, 84, 80, 0.12);
+}
+.share-card-seal span {
+  display: block;
+  text-align: center;
+  line-height: 1.4;
+}
+.share-card-seal::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(184, 84, 80, 0.35);
+  pointer-events: none;
+}
+.share-card-seal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(245,240,230,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(245,240,230,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 45%, rgba(245,240,230,0.1) 0%, transparent 40%);
+  pointer-events: none;
 }
 .share-card-title {
   font-family: var(--font-title);
@@ -2173,4 +2278,337 @@ body {
   .share-card-title { font-size: 1.4rem; }
   .share-card-rank { font-size: 1.3rem; }
   .share-stat-num { font-size: 1.2rem; }
+}
+
+/* ==================== 日签诗歌卡片 ==================== */
+
+/* 模态遮罩 */
+.dc-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(20, 18, 15, 0.82);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: dcFadeIn 0.35s ease-out;
+  -webkit-user-select: none;
+  user-select: none;
+}
+@keyframes dcFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 卡片容器 */
+.dc-card {
+  width: 360px;
+  height: 540px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(196, 163, 90, 0.18);
+  animation: dcCardIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes dcCardIn {
+  from { opacity: 0; transform: scale(0.92) translateY(16px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* 卡片内层 */
+.dc-inner {
+  width: 100%;
+  height: 100%;
+  padding: 36px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 印章 */
+.dc-seal {
+  position: absolute;
+  top: 26px;
+  left: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1px;
+  width: 38px;
+  height: 50px;
+  border: 2px solid #B85450;
+  color: #B85450;
+  font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', serif;
+  font-size: 0.78rem;
+  padding: 5px 3px;
+  transform: rotate(-3deg);
+  letter-spacing: 1px;
+  line-height: 1.4;
+  opacity: 0.68;
+  z-index: 2;
+  box-shadow:
+    inset 0 0 0 2px transparent,
+    inset 0 0 0 3px rgba(184, 84, 80, 0.1);
+}
+.dc-seal span {
+  display: block;
+  text-align: center;
+  line-height: 1.4;
+}
+.dc-seal::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(184, 84, 80, 0.3);
+  pointer-events: none;
+}
+.dc-seal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(245,240,230,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(245,240,230,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 45%, rgba(245,240,230,0.1) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* 驿站名 */
+.dc-station-name {
+  font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', serif;
+  font-size: 2.6rem;
+  color: #2C2C2C;
+  letter-spacing: 10px;
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.2;
+  position: relative;
+  z-index: 2;
+}
+.dc-modern-name {
+  font-size: 0.72rem;
+  color: #9A9590;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-top: 6px;
+}
+.dc-ancient-date {
+  font-size: 0.68rem;
+  color: #9A9590;
+  text-align: center;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* 分割线 */
+.dc-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+}
+.dc-divider-line {
+  flex: 1;
+  height: 1px;
+  opacity: 0.35;
+}
+.dc-divider-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* 诗词区 */
+.dc-poem-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+.dc-poem-title {
+  font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', serif;
+  font-size: 0.92rem;
+  color: #5A5A5A;
+  text-align: center;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+.dc-poem-author {
+  font-size: 0.72rem;
+  color: #9A9590;
+  text-align: center;
+  margin-bottom: 14px;
+  letter-spacing: 3px;
+}
+.dc-poem-lines {
+  text-align: center;
+}
+.dc-poem-line {
+  font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  font-size: 1.12rem;
+  color: #2C2C2C;
+  line-height: 2.1;
+  letter-spacing: 2px;
+}
+
+/* 底部 */
+.dc-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.dc-characters {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+.dc-char-img {
+  height: 68px;
+  width: auto;
+  object-fit: contain;
+}
+.dc-char-cat {
+  height: 50px;
+}
+.dc-branding {
+  text-align: right;
+}
+.dc-today {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.68rem;
+  color: #9A9590;
+  letter-spacing: 1px;
+}
+.dc-brand-name {
+  font-family: 'Ma Shan Zheng', 'STKaiti', serif;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  margin-top: 2px;
+  opacity: 0.65;
+}
+
+/* 操作按钮 */
+.dc-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  animation: dcCardIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.dc-save-btn {
+  flex: 1;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #C4A35A, #D4B36A);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.92rem;
+  cursor: pointer;
+  letter-spacing: 2px;
+  min-height: 46px;
+  touch-action: manipulation;
+  transition: all 0.3s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.dc-save-btn:active {
+  transform: scale(0.96);
+  transition: none;
+}
+.dc-close-btn {
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 24px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+  min-height: 46px;
+  touch-action: manipulation;
+  transition: all 0.3s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.dc-close-btn:active {
+  transform: scale(0.96);
+  background: rgba(255, 255, 255, 0.2);
+  transition: none;
+}
+
+/* 驿站详情中的日签入口按钮 */
+.daily-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, rgba(196, 163, 90, 0.12), rgba(196, 163, 90, 0.06));
+  border: 1px solid rgba(196, 163, 90, 0.25);
+  border-radius: 20px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.82rem;
+  color: #C4A35A;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.3s;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.daily-card-btn:hover {
+  background: linear-gradient(135deg, rgba(196, 163, 90, 0.2), rgba(196, 163, 90, 0.1));
+  transform: translateY(-2px);
+}
+.daily-card-btn:active {
+  transform: scale(0.96);
+  transition: none;
+}
+
+/* 日签响应式 */
+@media (max-width: 400px) {
+  .dc-card {
+    width: 310px;
+    height: 465px;
+  }
+  .dc-inner {
+    padding: 28px 22px 20px;
+  }
+  .dc-station-name {
+    font-size: 2.1rem;
+    letter-spacing: 6px;
+  }
+  .dc-poem-line {
+    font-size: 0.98rem;
+    line-height: 2;
+  }
+  .dc-char-img {
+    height: 56px;
+  }
+  .dc-char-cat {
+    height: 42px;
+  }
+  .dc-divider {
+    margin: 14px 0;
+  }
+  .dc-seal {
+    width: 32px;
+    height: 42px;
+    font-size: 0.68rem;
+    top: 20px;
+    left: 20px;
+    padding: 4px 2px;
+  }
+  .dc-seal::before {
+    inset: 2px;
+  }
 }

@@ -2328,6 +2328,39 @@ body {
   overflow: hidden;
 }
 
+/* 风景插画背景 */
+.dc-scenery {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  opacity: 0.32;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 插画遮罩层：上方透明→下方渐变，保持文字可读 */
+.dc-scenery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 240, 230, 0.5) 0%,
+    rgba(245, 240, 230, 0.3) 30%,
+    rgba(245, 240, 230, 0.55) 60%,
+    rgba(245, 240, 230, 0.85) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* 印章 */
 .dc-seal {
   position: absolute;

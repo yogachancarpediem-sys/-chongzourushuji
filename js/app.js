@@ -822,13 +822,9 @@ function generateDailyCard(stationId) {
   modal.innerHTML =
     '<div class="dc-card" id="dc-card">' +
       '<div class="dc-inner" style="background:' + bg + ';">' +
-        /* 水墨晕染装饰 */
-        '<div style="position:absolute;width:220px;height:220px;top:-70px;right:-50px;' +
-          'background:radial-gradient(circle,' + hexRgba(accent, 0.1) + ',transparent 70%);' +
-          'border-radius:50%;pointer-events:none;z-index:0;"></div>' +
-        '<div style="position:absolute;width:180px;height:180px;bottom:50px;left:-55px;' +
-          'background:radial-gradient(circle,' + hexRgba(accent, 0.06) + ',transparent 70%);' +
-          'border-radius:50%;pointer-events:none;z-index:0;"></div>' +
+        /* 风景插画背景 */
+        '<div class="dc-scenery" style="background-image:url(assets/scenery/' + stationId + '.png);"></div>' +
+        '<div class="dc-scenery-overlay"></div>' +
         /* 印章 */
         '<div class="dc-seal"><span>入</span><span>蜀</span><span>记</span></div>' +
         /* 驿站名 */
